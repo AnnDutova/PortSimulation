@@ -1,10 +1,12 @@
-package stage1;
+package stage1.ships;
 
 import org.omg.DynamicAny.DynAnyPackage.InvalidValue;
+import stage1.enums.CargoType;
+import stage1.time.Time;
 
 import java.util.LinkedList;
 
-public class ShipFabrics
+public class ShipFactory
 {
     public LinkedList<DockedShip> generateShipList(int maxCountOfShips)
     {
@@ -65,8 +67,7 @@ public class ShipFabrics
 
     private boolean generateDecision()
     {
-        int num = (int)(Math.random()*2);
-        return num == 0? false: true;
+        return (int)(Math.random()*2) != 0;
     }
 
     private CargoType generateCargoType()
@@ -109,13 +110,11 @@ public class ShipFabrics
 
     private int generateRandom60number()
     {
-        int randomNumber = (int)( Math.random()*60-1);
-        return randomNumber;
+        return (int)( Math.random()*60-1);
     }
 
     private int generateRandom24number()
     {
-        int randomNumber = (int)( Math.random()*24-1);
-        return randomNumber;
+        return (int)( Math.random()*24-1);
     }
 }

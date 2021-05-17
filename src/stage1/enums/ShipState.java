@@ -1,4 +1,4 @@
-package stage1;
+package stage1.enums;
 
 public enum ShipState
 {

@@ -1,4 +1,4 @@
-package stage1;
+package stage1.time;
 
 import org.omg.DynamicAny.DynAnyPackage.InvalidValue;
 
@@ -12,13 +12,14 @@ public class Time implements Comparable<Time>
     private int hour;
     private int minutes;
 
-    Time(){
+    public Time()
+    {
         this.day = 0;
         this.hour = 0;
         this.minutes = 0;
     }
 
-    Time(int day, int hour, int minutes) throws InvalidValue
+    public Time(int day, int hour, int minutes) throws InvalidValue
     {
         if (day <= MAX_DAYS && day >= 0 )
         {
@@ -56,8 +57,7 @@ public class Time implements Comparable<Time>
         int days = milliseconds / MAX_MINUTES / MAX_HOURS;
         int hours = (milliseconds - days * MAX_MINUTES * MAX_HOURS) / MAX_MINUTES;
         int minutes = milliseconds - days * MAX_MINUTES * MAX_HOURS - hours * MAX_MINUTES;
-        Time time = new Time(days, hours, minutes);
-        return time;
+        return new Time(days, hours, minutes);
     }
 
     public Time getDifference(Time time2)
@@ -74,17 +74,7 @@ public class Time implements Comparable<Time>
         return time;
     }
 
-    public boolean bigger (Time time2) //time1 more if true
-    {
-        return getTimeInSeconds() > time2.getTimeInSeconds();
-    }
-
-    public boolean less (Time time2) //time1 less if true
-    {
-        return getTimeInSeconds() < time2.getTimeInSeconds();
-    }
-
-    Time plus (Time time2)
+    public Time plus(Time time2)
     {
         int resultDay = day + time2.day;
         int resultHour, resultMinutes;
@@ -110,7 +100,6 @@ public class Time implements Comparable<Time>
         Time time = new Time();
         try
         {
-/*            System.out.println("plus: "+ resultDay+ " "+ resultHour+" "+ resultMinutes );*/
             time = new Time(resultDay, resultHour, resultMinutes);
         }
         catch (InvalidValue e)
@@ -118,6 +107,23 @@ public class Time implements Comparable<Time>
             e.fillInStackTrace();
         }
         return time;
+    }
+
+    public Time plus(int wait) throws InvalidValue
+    {
+        int newMinutes = minutes + wait;
+        int newHour = hour;
+        int newDay = day;
+        while (newMinutes >= MAX_MINUTES)
+        {
+            newHour++;
+            newMinutes-=MAX_MINUTES;
+        }
+        while (newHour >= MAX_HOURS){
+            newDay++;
+            newHour -=MAX_HOURS;
+        }
+        return new Time(newDay, newHour, newMinutes);
     }
 
     public Time minus(Time time2)
@@ -144,7 +150,6 @@ public class Time implements Comparable<Time>
         Time time = new Time();
         try
         {
-/*            System.out.println("minus: "+ resultDay+ " "+ resultHour+" "+ resultMinutes );*/
             time = new Time(resultDay, resultHour, resultMinutes);
         }
         catch (InvalidValue e)
@@ -152,6 +157,11 @@ public class Time implements Comparable<Time>
             e.fillInStackTrace();
         }
         return time;
+    }
+
+    public boolean bigger (Time time2) //time1 more if true
+    {
+        return getTimeInSeconds() > time2.getTimeInSeconds();
     }
 
     @Override
@@ -174,31 +184,11 @@ public class Time implements Comparable<Time>
                 return 1;
             }
             else return -1;
-
         }
         else if(day > time2.day)
         {
             return 1;
         }
         else return -1;
-    }
-
-    public Time plus(int wait) throws InvalidValue {
-        Time temp = new Time();
-        int newMinutes = minutes + wait;
-        int newHour = hour;
-        int newDay = day;
-        while (newMinutes >= MAX_MINUTES)
-        {
-            newHour++;
-            newMinutes-=MAX_MINUTES;
-        }
-        while (newHour >= MAX_HOURS){
-            newDay++;
-            newHour -=MAX_HOURS;
-        }
-/*        System.out.println("plus int: "+ newDay+ " "+ newHour+" "+ newMinutes );*/
-        temp = new Time(newDay, newHour, newMinutes);
-        return temp;
     }
 }

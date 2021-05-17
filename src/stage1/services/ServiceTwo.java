@@ -1,17 +1,23 @@
-package stage1;
+package stage1.services;
 
 import org.omg.DynamicAny.DynAnyPackage.InvalidValue;
+import stage1.ships.DockedShip;
+import stage1.time.Time;
+import stage1.schedule.TimeTable;
+import stage1.schedule.TimeTableJSONParser;
+import stage1.enums.CargoType;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import static stage1.TimeTableJSONParser.JSON_FILE_NAME;
+import static stage1.schedule.TimeTableJSONParser.JSON_FILE_NAME;
 
 public class ServiceTwo
 {
     private TimeTable timeTable;
-    
-    ServiceTwo(TimeTable timeTable)
+
+    public ServiceTwo(TimeTable timeTable)
     {
         this.timeTable = timeTable;
     }
@@ -21,8 +27,8 @@ public class ServiceTwo
         addShipManually();
         try
         {
-        TimeTableJSONParser parser = new TimeTableJSONParser();
-        parser.writeJSON(timeTable);
+            TimeTableJSONParser parser = new TimeTableJSONParser();
+            parser.writeJSON(timeTable);
         }
         catch(IOException ex)
         {
@@ -109,7 +115,7 @@ public class ServiceTwo
                     while(minutes < 0)
                     {
                         try
-                            {
+                        {
                             System.out.print("\tEnter minutes: ");
                             String sMinutes = reader.readLine();
                             minutes = Integer.parseInt(sMinutes);

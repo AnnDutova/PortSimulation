@@ -1,4 +1,6 @@
-package stage1;
+package stage1.services;
+
+import stage1.schedule.TimeTable;
 
 public class ServiceOne
 {
@@ -9,6 +11,7 @@ public class ServiceOne
         timeTable.generateTimeTable();
         timeTable.print();
     }
+
     public TimeTable giveSchedule()
     {
         return this.timeTable;

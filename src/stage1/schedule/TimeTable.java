@@ -1,24 +1,22 @@
-package stage1;
+package stage1.schedule;
 
 import javafx.util.Pair;
+import stage1.comparators.DataComparator;
+import stage1.ships.DockedShip;
+import stage1.ships.ShipFactory;
+import stage1.time.Time;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.LinkedList;
 
 public class TimeTable
 {
-    private ArrayList<Pair<Time, DockedShip>> timeTable = new ArrayList<Pair<Time, DockedShip>>();
-    private ShipFabrics fabrics = new ShipFabrics();
+    private ArrayList<Pair<Time, DockedShip>> timeTable = new ArrayList<>();
+    private ShipFactory fabrics = new ShipFactory();
+    public final int MAX_OF_SHIPS = 150;
 
-    public final int MAX_OF_SHIPS = 100;
 
-    TimeTable() {}
-
-    TimeTable(LinkedList<DockedShip> board)
-    {
-        fillTimeTable(board);
-    }
+    public TimeTable() {}
 
     public void generateTimeTable()
     {
@@ -76,18 +74,5 @@ public class TimeTable
         timeTable.sort(new DataComparator());
     }
 
-    public void sortTimeTable()
-    {
-        timeTable.sort(new DataComparator());
-    }
-
 }
 
-class DataComparator implements Comparator<Pair<Time, DockedShip>>
-{
-    @Override
-    public int compare(Pair<Time, DockedShip> o1, Pair<Time, DockedShip> o2)
-    {
-        return o1.getKey().compareTo(o2.getKey());
-    }
-}

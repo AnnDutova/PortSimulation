@@ -1,19 +1,22 @@
-package stage1;
+package stage1.schedule;
 
-import javafx.util.Pair;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.omg.DynamicAny.DynAnyPackage.InvalidValue;
+import stage1.comparators.TaskComparator;
+import stage1.enums.CargoType;
+import stage1.ships.DockedShip;
+import stage1.ships.Task;
+import stage1.time.Time;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Comparator;
 
 public class TimeTableJSONParser
 {
@@ -95,10 +98,8 @@ public class TimeTableJSONParser
         String invalidUnloadingDevastation = (String) shipObject.get("Unload wait");
         Time unloadingDevastation = parseString(invalidUnloadingDevastation);
 
-        DockedShip ship = new DockedShip(shipName, type, cargoWeight, comingTime, devastation, unloadingDevastation );
-        Task task = new Task(ship);
-        tasker.add(task);
-
+        DockedShip ship = new DockedShip(shipName, type, cargoWeight, comingTime, devastation, unloadingDevastation);
+        tasker.add(new Task(ship));
     }
 
     private Time parseString(String invalidTime)
@@ -135,12 +136,4 @@ public class TimeTableJSONParser
         return output;
     }
 
-}
-class TaskComparator implements Comparator<Task>
-{
-    @Override
-    public int compare(Task o1, Task o2)
-    {
-        return o1.getComingTime().compareTo(o2.getComingTime());
-    }
 }

@@ -1,23 +1,27 @@
 package stage1;
 
-import com.sun.corba.se.impl.orbutil.concurrent.Mutex;
+import stage1.services.ServiceOne;
+import stage1.services.ServiceThree;
+import stage1.services.ServiceTwo;
 
-public class Main
-{
-    public static void main(String[] args)
-    {
+import java.util.concurrent.Semaphore;
+
+public class Main {
+
+    public static void main(String[] args) {
         ServiceOne one = new ServiceOne();
         one.start();
         ServiceTwo two = new ServiceTwo(one.giveSchedule());
         two.start();
-        Mutex mutex = new Mutex();
+        Semaphore mutex = new Semaphore(1);
         ServiceThree three = new ServiceThree(mutex);
         three.start();
 
         try
         {
             mutex.acquire();
-        } catch (InterruptedException e) {
+        } catch (InterruptedException e)
+        {
             e.printStackTrace();
         }
         three.printStatistic();

@@ -1,14 +1,16 @@
-package stage1;
+package stage1.ships;
 
 import org.omg.DynamicAny.DynAnyPackage.InvalidValue;
 
-import static stage1.Crane.*;
+import stage1.enums.CargoType;
+import stage1.time.Time;
+import static stage1.threads.Crane.*;
 
 abstract public class AShip
 {
     private String name;
     private CargoType type;
-    protected int cargoWeight;
+    private int cargoWeight;
     private Time comingTime;
     private Time parkingTime;
 
@@ -57,7 +59,7 @@ abstract public class AShip
 
     public String getCargoTypeString()
     {
-        String output = new String();
+        String output = null;
         switch(type){
             case LOOSE:
                 output = CargoType.LOOSE.toString();
@@ -71,10 +73,14 @@ abstract public class AShip
         }
         return output;
     }
-
     public int getCargoWeight()
     {
         return cargoWeight;
+    }
+
+    public void setCargoWeight(int weight)
+    {
+        cargoWeight = weight;
     }
 
     public Time getComingTime()
@@ -96,4 +102,5 @@ abstract public class AShip
                 "\nComing time: " + comingTime +
                 "\nParking time: " + parkingTime;
     }
+
 }
